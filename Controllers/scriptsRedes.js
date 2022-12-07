@@ -7,10 +7,10 @@ const path = require('path');
 
 // json files
 const directoryRoot = path.join(__dirname + '/..' + '/DataBase');
-const userDB = require('../DataBase/Users.json');
-const tasksDB = require('../DataBase/Tareas.json');
-const quotesDB = require('../DataBase/Frases.json');
-const ubicationDB = require('../DataBase/Ubicacion.json');
+let userDB = '';
+let tasksDB = '';
+let quotesDB = '';
+let ubicationDB = '';
 
 // --------------------------------------- USER ---------------------------
 proyectoCtr.createUser = (req, res) => {
@@ -354,6 +354,10 @@ proyectoCtr.createDB = (req, res) => {
     createFile(dbAjustes);
     createFile(dbTareas);
     createFile(dbUser);
+    userDB = require('../DataBase/Users.json');
+    tasksDB = require('../DataBase/Tareas.json');
+    quotesDB = require('../DataBase/Frases.json');
+    ubicationDB = require('../DataBase/Ubicacion.json');
     res.send({ ok: true });
 };
 
