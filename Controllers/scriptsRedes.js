@@ -7,10 +7,10 @@ const path = require('path');
 
 // json files
 const directoryRoot = path.join(__dirname + '/..' + '/DataBase');
-let userDB = '';
-let tasksDB = '';
-let quotesDB = '';
-let ubicationDB = '';
+const userDB = require('../DataBase/Users.json');
+const tasksDB = require('../DataBase/Tareas.json');
+const quotesDB = require('../DataBase/Frases.json');
+const ubicationDB = require('../DataBase/Ubicacion.json');
 
 // --------------------------------------- USER ---------------------------
 proyectoCtr.createUser = (req, res) => {
@@ -255,7 +255,8 @@ proyectoCtr.deleteQuote = (req, res) => {
     const frase = req.body.Frase;
     const user = req.body.User;
     let dirQuotesDB = path.join(directoryRoot + '/Frases.json');
-    const quotes = quotesDB;
+    let quotes = []
+    quotes = quotesDB;
     let index;
     for (let i = 0; i < quotes.length; i++) {
         if (quotes[i].Frase === frase && quotes[i].User === user) {
@@ -263,8 +264,8 @@ proyectoCtr.deleteQuote = (req, res) => {
             break;
         }
     }
-    quotesDB.splice(index, 1);
-    saveChanges(quotesDB, dirQuotesDB);
+    quotes.splice(index, 1);
+    saveChanges(quotes, dirQuotesDB);
     res.status(200).send({
         msg: 'Frase eliminada!',
         ok: true
@@ -354,10 +355,7 @@ proyectoCtr.createDB = (req, res) => {
     createFile(dbAjustes);
     createFile(dbTareas);
     createFile(dbUser);
-    userDB = require('../DataBase/Users.json');
-    tasksDB = require('../DataBase/Tareas.json');
-    quotesDB = require('../DataBase/Frases.json');
-    ubicationDB = require('../DataBase/Ubicacion.json');
+
     res.send({ ok: true });
 };
 
